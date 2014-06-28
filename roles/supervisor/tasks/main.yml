@@ -1,0 +1,3 @@
+---
+- name: Install supervisor globally
+  easy_install: executable=easy_install-2.7 name=supervisor
