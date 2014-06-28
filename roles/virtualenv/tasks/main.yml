@@ -1,3 +1,24 @@
 ---
-- name: Just a test task
-  debug: msg="{{ username }}@{{ inventory_hostname }}"
+- name: Create necessary folders
+  raw: mkdir -p ~/{bin,tmp,lib/python2.7}
+
+- name: Install pip
+  easy_install: executable=easy_install-2.7 name=pip
+
+- name: Install virtualenv
+  raw: ~/bin/pip2.7 install virtualenv --no-use-wheel
+
+- name: Install virtualenvwrapper
+  raw: ~/bin/pip2.7 install --install-option="--user" virtualenvwrapper --no-use-wheel
+
+- name: Add virtualenvwrapper exports to .bashrc
+  lineinfile: "dest=~/.bashrc line='{{ item.line }}'"
+  with_items:
+    - { line: 'export WORKON_HOME=$HOME/Envs' }
+    - { line: 'export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2.7' }
+    - { line: 'export PIP_VIRTUALENV_BASE=$WORKON_HOME' }
+    - { line: 'export PIP_RESPECT_VIRTUALENV=true' }
+    - { line: 'source $HOME/bin/virtualenvwrapper.sh' }
+
+- name: Source the new .bashrc
+  raw: source .bashrc
