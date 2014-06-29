@@ -1,9 +1,12 @@
 ---
 - name: Install zsh, vim, virtualenv, supervisor, gunicorn & a Django project on Webfaction
   hosts: webfaction-server
+  vars_files:
+    - vars/external_vars.yml
   user: "{{ username }}"
 
   roles:
     - virtualenv
     - common-python
     - supervisor
+    - gunicorn

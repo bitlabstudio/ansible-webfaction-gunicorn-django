@@ -1,0 +1,16 @@
+---
+- name: Create necessary folders
+  raw: mkdir -p ~/src
+
+# Somehow this doesn't work on Webfaction
+# - name: Download libevent sources
+#  raw: cd ~/src & wget --no-check-certificate {{ libevent_source_url }}
+
+# - name: Install gevent
+#  raw: ~/bin/pip2.7 install --install-option="-I$HOME/include" --install-option="-L$HOME/lib" --no-use-wheel gevent
+
+- name: Install useful packages
+  raw: ~/bin/pip2.7 install --install-option="--user" --no-use-wheel {{ item.name }}
+  with_items:
+    - { name: setproctitle }
+    - { name: greenlet }
