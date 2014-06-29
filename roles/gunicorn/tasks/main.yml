@@ -2,9 +2,36 @@
 - name: Create necessary folders
   raw: mkdir -p ~/src
 
-# Somehow this doesn't work on Webfaction
-# - name: Download libevent sources
-#  raw: cd ~/src & wget --no-check-certificate {{ libevent_source_url }}
+- name: See if libevent sources have been downloaded
+  stat: path=~/src/{{ libevent_tar_filename }}
+  register: libevent_download
+
+- name: Download libevent sources
+  raw: curl -L {{ libevent_source_url }} > ~/src/{{ libevent_tar_filename }}
+  when: not libevent_download.stat.exists
+
+- name: See if libevent sources have been unpacked
+  stat: path=~/src/{{ libevent_folder_name }}
+  register: libevent_folder
+
+- name: Unpack libevent sources
+  raw: tar -xvf ~/src/{{ libevent_tar_filename }} -C ~/src/
+  when: not libevent_folder.stat.exists
+
+- name: Configure libevent
+  shell: ./configure --prefix=$HOME
+  args:
+    chdir: ~/src/{{ libevent_folder_name }}
+
+- name: Make libevent
+  shell: make
+  args:
+    chdir: ~/src/{{ libevent_folder_name }}
+
+- name: Install libevent
+  shell: make install
+  args:
+    chdir: ~/src/{{ libevent_folder_name }}
 
 # - name: Install gevent
 #  raw: ~/bin/pip2.7 install --install-option="-I$HOME/include" --install-option="-L$HOME/lib" --no-use-wheel gevent
