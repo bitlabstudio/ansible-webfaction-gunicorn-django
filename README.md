@@ -21,7 +21,8 @@ Using this playbook involves several steps:
 
 * Setup your Webfaction apps and websites in the control panel
 * Change the variables of this playbook
-* Upload your Django repo into a git repo
+* Upload your Django repo into a git repo and clone it on the server
+* Create your local_settings.py
 * Run the playbook
 
 # Prerequisites
@@ -54,7 +55,14 @@ your liking. The values you need to change are all uppercase letters.
     cp external_vars.yml.example external_vars.yml
     vim external_vars.yml
 
-Now you want to upload your Django project into a Git repo on your server:
+## Prepare the git repository
+
+We assume that you have a Django project on your local machine. Naturally, you
+should have that project under version control. You might want to host your
+project on Bitbucket or Github, or you might just want to host the repository
+on the Webfaction server itself.
+
+If you want to host it yourself, create a new repository on your server:
 
     ssh username@username.webfactional.com
     cd webapps/git
@@ -65,6 +73,28 @@ On your local machine:
     cd /path/to/your/django/repo/
     git remote add origin username@username.webfactional.com:/home/username/webapps/git/repos/project_name.git
     git push -u origin master
+
+Regardless of where you host it, you should now clone the repository on your
+server:
+
+    ssh username@username.webfactional.com
+    mkdir -p ~/src
+    cd ~/src
+    git clone ~/webapps/git/repos/project_name.git
+
+The snippet above assumes that you host the repo yourself. If you are hosting
+it somewhere else, of course the clone command will be different.
+
+Once you have cloned the repository, create your `local_settings.py`. This
+file should be in `.gitignore` so having it lying around in this folder will
+be no problem but it will make the first deployment easier.
+
+    ssh username@username.webfactional.com
+    cd ~/src/project_name/project_name/project_name/settings
+    cp local_settings.py.sample local_settings.py
+    vim local_settings.py
+
+# Execute the playbook
 
 Now execute the playbook:
 

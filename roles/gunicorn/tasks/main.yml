@@ -1,13 +1,13 @@
 ---
 - name: Create necessary folders
-  raw: mkdir -p ~/src
+  shell: mkdir -p ~/src
 
 - name: See if libevent sources have been downloaded
   stat: path=~/src/{{ libevent_tar_filename }}
   register: libevent_download
 
 - name: Download libevent sources
-  raw: curl -L {{ libevent_source_url }} > ~/src/{{ libevent_tar_filename }}
+  shell: curl -L {{ libevent_source_url }} > ~/src/{{ libevent_tar_filename }}
   when: not libevent_download.stat.exists
 
 - name: See if libevent sources have been unpacked
@@ -33,11 +33,15 @@
   args:
     chdir: ~/src/{{ libevent_folder_name }}
 
-# - name: Install gevent
-#  raw: ~/bin/pip2.7 install --install-option="-I$HOME/include" --install-option="-L$HOME/lib" --no-use-wheel gevent
-
 - name: Install useful packages
-  raw: ~/bin/pip2.7 install --install-option="--user" --no-use-wheel {{ item.name }}
+  shell: ~/bin/pip2.7 install --install-option="--user" --no-use-wheel {{ item.name }}
   with_items:
     - { name: setproctitle }
     - { name: greenlet }
+
+# Cannot install gevent on Webfaction
+# - name: Install gevent
+#  shell: ~/bin/pip2.7 install --user gevent
+
+- name: Create virtualenv
+  shell: mkvirtualenv {{ django_project_name }}

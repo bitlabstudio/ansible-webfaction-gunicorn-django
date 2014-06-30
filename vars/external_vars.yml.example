@@ -2,7 +2,7 @@
 username: USERNAME
 gunicorn_port: XXXXX
 django_project_name: PROJECT_NAME
-git_repo: {{ username }}@{{ username }}.webfactional.com:/home/{{ username }}/webapps/git/repos/{{ django_project_name }}.git
+git_repo: ~/src/{{ django_project_name }}
 libevent_folder_name: libevent-2.0.21-stable
 libevent_source_url: http://sourceforge.net/projects/levent/files/libevent/libevent-2.0/{{ libevent_folder_name }}.tar.gz/download
 libevent_tar_filename: "{{ libevent_folder_name }}.tar.gz"
