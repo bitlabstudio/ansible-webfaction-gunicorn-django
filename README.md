@@ -6,7 +6,7 @@ This is an Ansible playbook that sets up a new Webfaction server. You cank of
 course, just use the 1-click installer provided by Webfaction, but if you want
 to run your project professionally, you will outgrow that installer in no time.
 
-This playbook sets up Django and serves it via gunicorn & gevent. Static files
+This playbook sets up Django and serves it via nginx & uWSGI. Static files
 will be handled by Webfaction's global nginx instance, as usual. Additionally
 we will install statsd and graphite, which will enable you to create awesome
 dashboards to monitor any aspect of your app / server. Supervisor will be used
@@ -32,7 +32,7 @@ Using this playbook involves several steps:
 First, login to the Webfaction control panel and create the following
 applications:
 
-* `gunicorn` - Custom app listening on port
+* `nginx` - Custom app listening on port
 * `static` - Static only (no .htaccess) / "expires max"
 * `media` - Static only (no .htaccess) / "expires max"
 * `git` - Git
@@ -81,6 +81,8 @@ server:
     mkdir -p ~/src
     cd ~/src
     git clone ~/webapps/git/repos/project_name.git
+    git submodule init
+    git submodule update
 
 The snippet above assumes that you host the repo yourself. If you are hosting
 it somewhere else, of course the clone command will be different.

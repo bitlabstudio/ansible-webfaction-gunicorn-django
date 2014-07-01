@@ -14,6 +14,8 @@
 - name: Add virtualenvwrapper exports to .bashrc
   lineinfile: "dest=~/.bashrc line='{{ item.line }}'"
   with_items:
+    - { line: 'export PATH=$PATH:$HOME/bin' }
+    - { line: 'export TMPDIR=$HOME/tmp' }
     - { line: 'export WORKON_HOME=$HOME/Envs' }
     - { line: 'export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2.7' }
     - { line: 'export PIP_VIRTUALENV_BASE=$WORKON_HOME' }

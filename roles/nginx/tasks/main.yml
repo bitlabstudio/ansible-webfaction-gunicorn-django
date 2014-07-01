@@ -1,0 +1,44 @@
+---
+- name: Nginx - Create necessary folders
+  shell: mkdir -p ~/src ~/local/sbin ~/local/etc ~/local/lock ~/local/run ~/local/nginx ~/tmp/nginx/client ~/tmp/nginx/proxy ~/tmp/nginx/fcgi}
+
+- name: See if nginx sources have been downloaded
+  stat: path=~/src/{{ nginx_download_filename }}
+  register: nginx_download
+
+- name: Download nginx
+  shell: curl -O {{ nginx_downloads_url }}{{ nginx_download_filename }}
+  when: not nginx_download.stat.exists
+  args:
+    chdir: ~/src
+
+- name: See if nginx sources have been unpacked
+  stat: path=~/src/{{ nginx_folder_name }}
+  register: nginx_folder
+
+- name: Unpack nginx
+  shell: tar -xzvf {{ nginx_download_filename }}
+  when: not nginx_folder.stat.exists
+  args:
+    chdir: ~/src
+
+- name: Configure nginx
+  shell: ./configure --prefix=$HOME/local/nginx --sbin-path=$HOME/local/sbin/nginx --conf-path=$HOME/local/etc/nginx.conf --error-log-path=$HOME/logs/user/nginx/error.log --http-log-path=$HOME/logs/user/nginx/access.log --pid-path=$HOME/local/run/nginx/nginx.pid --lock-path=$HOME/local/lock/nginx.lock --http-client-body-temp-path=$HOME/tmp/nginx/client/ --http-proxy-temp-path=$HOME/tmp/nginx/proxy/ --http-fastcgi-temp-path=$HOME/tmp/nginx/fcgi/ --with-http_flv_module --with-http_ssl_module --with-http_gzip_static_module
+  args:
+    chdir: ~/src/{{ nginx_folder_name }}
+
+- name: Make and install nginx
+  shell: make && make install
+  args:
+    chdir: ~/src/{{ nginx_folder_name }}
+
+- name: Add local sbin to PATH
+  lineinfile: "dest=~/.bashrc line='export PATH=$HOME/local/sbin:$PATH'"
+
+- name: Backup original nginx conf
+  shell: mv nginx.conf nginx.conf.backup
+  args:
+    chdir: ~/local/etc/
+
+- name: Upload new nginx conf
+  template: src=nginx.conf dest=~/local/etc/

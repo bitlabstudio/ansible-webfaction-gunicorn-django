@@ -1,47 +1,62 @@
 ---
 - name: Create necessary folders
-  shell: mkdir -p ~/src
+  shell: mkdir -p ~/src & mkdir -p ~/tmp
 
-- name: See if libevent sources have been downloaded
-  stat: path=~/src/{{ libevent_tar_filename }}
-  register: libevent_download
+# According to some post I found online, the latest gevent version has libev
+# bundled and there is no need to install libevent any more
 
-- name: Download libevent sources
-  shell: curl -L {{ libevent_source_url }} > ~/src/{{ libevent_tar_filename }}
-  when: not libevent_download.stat.exists
+#- name: See if libevent sources have been downloaded
+#  stat: path=~/src/{{ libevent_tar_filename }}
+#  register: libevent_download
 
-- name: See if libevent sources have been unpacked
-  stat: path=~/src/{{ libevent_folder_name }}
-  register: libevent_folder
+#- name: Download libevent sources
+#  shell: curl -L {{ libevent_source_url }} > ~/src/{{ libevent_tar_filename }}
+#  when: not libevent_download.stat.exists
 
-- name: Unpack libevent sources
-  raw: tar -xvf ~/src/{{ libevent_tar_filename }} -C ~/src/
-  when: not libevent_folder.stat.exists
+#- name: See if libevent sources have been unpacked
+#  stat: path=~/src/{{ libevent_folder_name }}
+#  register: libevent_folder
 
-- name: Configure libevent
-  shell: ./configure --prefix=$HOME
-  args:
-    chdir: ~/src/{{ libevent_folder_name }}
+#- name: Unpack libevent sources
+#  raw: tar -xvf ~/src/{{ libevent_tar_filename }} -C ~/src/
+#  when: not libevent_folder.stat.exists
 
-- name: Make libevent
-  shell: make
-  args:
-    chdir: ~/src/{{ libevent_folder_name }}
+#- name: Configure libevent
+#  shell: ./configure --prefix=$HOME
+#  args:
+#    chdir: ~/src/{{ libevent_folder_name }}
 
-- name: Install libevent
-  shell: make install
-  args:
-    chdir: ~/src/{{ libevent_folder_name }}
+#- name: Make libevent
+#  shell: make
+#  args:
+#    chdir: ~/src/{{ libevent_folder_name }}
+
+#- name: Install libevent
+#  shell: make install
+#  args:
+#    chdir: ~/src/{{ libevent_folder_name }}
 
 - name: Install useful packages
   shell: ~/bin/pip2.7 install --install-option="--user" --no-use-wheel {{ item.name }}
   with_items:
     - { name: setproctitle }
     - { name: greenlet }
+    - { name: psycogreen }
 
-# Cannot install gevent on Webfaction
-# - name: Install gevent
-#  shell: ~/bin/pip2.7 install --user gevent
+- name: Install gevent
+  shell: ~/bin/pip2.7 install --user gevent
 
 - name: Create virtualenv
-  shell: mkvirtualenv {{ django_project_name }}
+  shell: source ~/.bashrc && mkvirtualenv {{ django_project_name }}
+
+- name: Update pip in venv
+  shell: source ~/.bashrc && workon {{ django_project_name }} && pip install pip --upgrade
+
+- name: Install gunicorn into venv
+  shell: source ~/.bashrc && workon {{ django_project_name }} && pip install gunicorn
+
+- name: Install project requirements
+  shell: source ~/.bashrc && workon {{ django_project_name }} && pip install -r {{ requirements_txt }}
+  register: pip_install
+- debug: msg="{{ pip_install.stdout }}"
+- debug: msg="{{ pip_install.stderr }}"

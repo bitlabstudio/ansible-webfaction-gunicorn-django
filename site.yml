@@ -9,4 +9,5 @@
     - virtualenv
     - common-python
     - supervisor
-    - gunicorn
+    # - gunicorn / we might not use this, trying nginx/uWSGI instead
+    - nginx

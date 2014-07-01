@@ -1,8 +1,17 @@
 ---
+# Change these things to your liking
 username: USERNAME
-gunicorn_port: XXXXX
+nginx_port: XXXX
 django_project_name: PROJECT_NAME
+nginx_version: 1.7.2
+
+# The things here should not be changed when using a default server layout
 git_repo: ~/src/{{ django_project_name }}
-libevent_folder_name: libevent-2.0.21-stable
-libevent_source_url: http://sourceforge.net/projects/levent/files/libevent/libevent-2.0/{{ libevent_folder_name }}.tar.gz/download
-libevent_tar_filename: "{{ libevent_folder_name }}.tar.gz"
+requirements_txt: ~/src/{{ django_project_name }}/{{ django_project_name }}/requirements.txt
+nginx_downloads_url: http://nginx.org/download/
+nginx_download_filename: nginx-{{ nginx_version }}.tar.gz
+nginx_folder_name: nginx-{{ nginx_version }}
+
+#libevent_folder_name: libevent-2.0.21-stable
+#libevent_source_url: http://sourceforge.net/projects/levent/files/libevent/libevent-2.0/{{ libevent_folder_name }}.tar.gz/download
+#libevent_tar_filename: "{{ libevent_folder_name }}.tar.gz"
