@@ -1,0 +1,6 @@
+---
+- name: Install uwsgi
+  shell: ~/bin/pip2.7 install uwsgi
+
+- name: Upload uwsgi.ini
+  template: src=uwsgi.ini dest=~/local/etc/uwsgi.ini
