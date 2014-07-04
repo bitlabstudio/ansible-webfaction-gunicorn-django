@@ -8,7 +8,6 @@
   roles:
     - virtualenv
     - common-python
-    - supervisor
-    # - gunicorn / we might not use this, trying nginx/uWSGI instead
     - nginx
     - uwsgi
+    - supervisor
