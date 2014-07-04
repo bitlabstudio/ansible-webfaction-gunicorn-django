@@ -20,7 +20,7 @@
   shell: crontab -l > ~/crontab.txt
 
 - name: add supervisor crontab
-  lineinfile: dest=~/crontab.txt line="*/5 * * * * PATH=/home/{{ username }}/bin:/home/{{ username }}/local/sbin /home/{{ username }}/local/sbin/supervisord -c /home/{{ username }}/local/etc/supervisord.conf > /home/{{ username }}/logs/user/supervisor/crontab.log 2>&1"
+  lineinfile: dest=~/crontab.txt line="*/5 * * * * PATH=/home/{{ username }}/bin:/home/{{ username }}/local/sbin /home/{{ username }}/bin/supervisord -c /home/{{ username }}/local/etc/supervisord.conf > /home/{{ username }}/logs/user/supervisor/crontab.log 2>&1"
 
 - name: install new crontab
   shell: crontab ~/crontab.txt && rm crontab.txt
