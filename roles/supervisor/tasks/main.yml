@@ -1,3 +1,26 @@
 ---
-- name: Install supervisor globally
-  easy_install: executable=easy_install-2.7 name=supervisor
+- name: create folders for supervisor
+  shell: mkdir -p ~/etc ~/logs/user/supervisor
+
+- name: Install supervisor
+  shell: ~/bin/pip2.7 install supervisor --user
+  args:
+    executable: /bin/bash
+
+- name: install supervisord.conf
+  template: src=supervisord.conf dest=~/local/etc/supervisord.conf
+
+- name: start supervisor
+  shell: source ~/.bash_profile && supervisord
+  args:
+    chdir: ~/local/etc/
+    executable: /bin/bash
+
+- name: save crontab to file
+  shell: crontab -l > ~/crontab.txt
+
+- name: add supervisor crontab
+  lineinfile: dest=~/crontab.txt line="*/5 * * * * PATH=/home/{{ username }}/bin:/home/{{ username }}/local/sbin /home/{{ username }}/local/sbin/supervisord -c /home/{{ username }}/local/etc/supervisord.conf > /home/{{ username }}/logs/user/supervisor/crontab.log 2>&1"
+
+- name: install new crontab
+  shell: crontab ~/crontab.txt && rm crontab.txt

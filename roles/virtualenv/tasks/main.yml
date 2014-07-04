@@ -11,8 +11,8 @@
 - name: Install virtualenvwrapper
   raw: ~/bin/pip2.7 install --install-option="--user" virtualenvwrapper --no-use-wheel
 
-- name: Add virtualenvwrapper exports to .bashrc
-  lineinfile: "dest=~/.bashrc line='{{ item.line }}'"
+- name: Add virtualenvwrapper exports to .bash_profile
+  lineinfile: "dest=~/.bash_profile line='{{ item.line }}'"
   with_items:
     - { line: 'export PATH=$PATH:$HOME/bin' }
     - { line: 'export TMPDIR=$HOME/tmp' }
@@ -22,5 +22,5 @@
     - { line: 'export PIP_RESPECT_VIRTUALENV=true' }
     - { line: 'source $HOME/bin/virtualenvwrapper.sh' }
 
-- name: Source the new .bashrc
+- name: Source the new .bash_profile
   raw: source .bashrc

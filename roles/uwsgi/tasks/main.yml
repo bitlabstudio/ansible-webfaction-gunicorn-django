@@ -1,4 +1,7 @@
 ---
+- name: uWSGI create necessary folders
+  shell: mkdir -p ~/logs/user/uwsgi
+
 - name: Install uwsgi
   shell: ~/bin/pip2.7 install uwsgi
 

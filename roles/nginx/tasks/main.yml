@@ -33,7 +33,7 @@
     chdir: ~/src/{{ nginx_folder_name }}
 
 - name: Add local sbin to PATH
-  lineinfile: "dest=~/.bashrc line='export PATH=$HOME/local/sbin:$PATH'"
+  lineinfile: "dest=~/.bash_profile line='export PATH=$HOME/local/sbin:$PATH'"
 
 - name: Backup original nginx conf
   shell: mv nginx.conf nginx.conf.backup
