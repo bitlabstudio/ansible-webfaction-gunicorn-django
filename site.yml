@@ -10,4 +10,6 @@
     - common-python
     - nginx
     - uwsgi
+    - nodejs
     - supervisor
+    - statsd

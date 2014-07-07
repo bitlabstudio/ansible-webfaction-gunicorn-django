@@ -1,0 +1,17 @@
+---
+- name: see if statsd sources have been cloned
+  stat: path=~/src/statsd
+  register: statsd_download
+
+- name: install statsd from GitHub
+  git: repo=https://github.com/etsy/statsd.git dest=~/src/statsd update=no
+  when: not statsd_download.stat.exists
+
+- name: pull latest statsd sources
+  shell: git pull
+  when: statsd_download.stat.exists
+  args:
+    chdir: /home/{{ username }}/src/statsd
+
+- name: copy statsd config
+  template: src=localConfig.js dest=~/local/etc/localConfig.js

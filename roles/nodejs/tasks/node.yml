@@ -1,0 +1,22 @@
+---
+- name: add bin to path for nodejs
+  lineinfile: "dest=~/.bash_profile line='export PATH=$PATH:$HOME/local/bin'"
+
+- name: fetch node.js source
+  get_url: url=http://nodejs.org/dist/node-latest.tar.gz dest=/home/{{ username }}/src/
+
+- name: unpack node.js tarball
+  command: tar zxf node-latest.tar.gz chdir=/home/{{ username }}/src
+
+- name: lookup directory name
+  shell: ls /home/{{ username }}/src | grep node-v
+  register: node_dir
+
+- name: configure
+  shell: /usr/local/bin/python2.7 ./configure --prefix=/home/{{ username }}/local chdir=/home/{{ username }}/src/{{ node_dir.stdout }}
+
+- name: make
+  shell: make chdir=/home/{{ username }}/src/{{ node_dir.stdout }}
+
+- name: make install
+  shell: make install chdir=/home/{{ username }}/src/{{ node_dir.stdout }}
