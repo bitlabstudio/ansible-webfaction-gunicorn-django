@@ -11,5 +11,8 @@
     - nginx
     - uwsgi
     - nodejs
-    - supervisor
     - statsd
+# TODO: first simple deployment here: - django
+    - supervisor
+# TODO: install carbon & whisper next
+# https://github.com/DandyDev/graphite-statsd-ansible-vagrant/blob/master/roles/graphite/tasks/main.yml
