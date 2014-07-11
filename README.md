@@ -1,6 +1,6 @@
 # Ansible Playbook for Django on Webfaction
 
-DO NOT USE THIS! WORK IN PROGRESS
+DO NOT USE THIS! PLAYBOOK NOT EXECUTABLE! WORK IN PROGRESS!
 
 ## Overview
 
