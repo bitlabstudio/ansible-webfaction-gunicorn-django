@@ -1,17 +1,17 @@
 ---
-- name: Create necessary folders
+- name: create folders for virtualenv
   raw: mkdir -p ~/{bin,tmp,lib/python2.7}
 
-- name: Install pip
+- name: install pip
   easy_install: executable=easy_install-2.7 name=pip
 
-- name: Install virtualenv
+- name: install virtualenv
   raw: ~/bin/pip2.7 install virtualenv --no-use-wheel
 
-- name: Install virtualenvwrapper
+- name: install virtualenvwrapper
   raw: ~/bin/pip2.7 install --install-option="--user" virtualenvwrapper --no-use-wheel
 
-- name: Add virtualenvwrapper exports to .bash_profile
+- name: add virtualenvwrapper exports to .bash_profile
   lineinfile: "dest=~/.bash_profile line='{{ item.line }}'"
   with_items:
     - { line: 'export PATH=$PATH:$HOME/bin' }
@@ -22,5 +22,5 @@
     - { line: 'export PIP_RESPECT_VIRTUALENV=true' }
     - { line: 'source $HOME/bin/virtualenvwrapper.sh' }
 
-- name: Source the new .bash_profile
+- name: source the new .bash_profile
   raw: source .bashrc
