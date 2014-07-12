@@ -1,0 +1,16 @@
+---
+- name: create graphite venv folders
+  shell: mkdir -p /home/{{ username }}/opt/graphite
+
+- name: create graphite venv
+  pip: name={{ item }} virtualenv=/home/{{ username }}/opt/graphite virtualenv_site_packages=no
+  with_items:
+    - psycopg2
+    - django
+    - django-tagging
+    - python-memcached
+    - pytz
+    - pyparsing
+    - gunicorn
+    - twisted
+    - cairocffi # Drop-in replacement for py2cairo. Can be installed inside virtualenv. See http://stackoverflow.com/questions/11491268/install-pycairo-in-virtualenv

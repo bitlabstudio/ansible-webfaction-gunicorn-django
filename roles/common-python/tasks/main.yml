@@ -1,6 +1,6 @@
 ---
 - name: install common global python packages
-  raw: ~/bin/pip2.7 install --install-option="--user" --no-use-wheel {{ item.name }}
+  shell: ~/bin/pip2.7 install --install-option="--user" --no-use-wheel {{ item.name }}
   with_items:
     - { name: mercurial }
     - { name: ipython }

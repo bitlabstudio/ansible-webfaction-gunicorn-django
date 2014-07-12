@@ -16,5 +16,6 @@
 # TODO: install carbon & whisper next
     - whisper
     - supervisor
+    - graphite-venv
 # TODO: create django auth proxy before graphite-api
 # https://github.com/DandyDev/graphite-statsd-ansible-vagrant/blob/master/roles/graphite/tasks/main.yml
