@@ -14,3 +14,4 @@
     - gunicorn
     - twisted
     - cairocffi # Drop-in replacement for py2cairo. Can be installed inside virtualenv. See http://stackoverflow.com/questions/11491268/install-pycairo-in-virtualenv
+    - whisper

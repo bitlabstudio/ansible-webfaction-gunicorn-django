@@ -1,0 +1,6 @@
+---
+- name: install carbon
+  shell: ./bin/pip2.7 install --install-option="--prefix=/home/{{ username }}/opt/graphite" --install-option="--install-lib=/home/{{ username }}/opt/graphite/lib" carbon
+  args:
+    chdir: /home/{{ username }}/opt/graphite/
+    executable: /bin/bash
