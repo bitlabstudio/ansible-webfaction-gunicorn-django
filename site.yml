@@ -12,9 +12,12 @@
     - uwsgi
     - nodejs
     - statsd
-# TODO: first simple deployment here: - django
+    # TODO: first simple deployment here: - django
     - graphite-venv
     - carbon
-    #- supervisor
-# TODO: create django auth proxy before graphite-api
+    # TODO: install graphite-api: http://graphite-api.readthedocs.org/en/latest/installation.html
+    #TODO: update supervisor for all parts of the stack
+    # TODO: create django auth proxy before graphite-api
+
+# Inspiration taken from:
 # https://github.com/DandyDev/graphite-statsd-ansible-vagrant/blob/master/roles/graphite/tasks/main.yml
