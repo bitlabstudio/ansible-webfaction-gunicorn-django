@@ -4,3 +4,12 @@
   args:
     chdir: /home/{{ username }}/opt/graphite/
     executable: /bin/bash
+
+- name: copy carbon.conf
+  template: src=carbon.conf dest=/home/{{ username }}/opt/graphite/conf/carbon.conf mode=0644
+
+- name: copy storage-schemas.conf
+  template: src=storage-schemas.conf dest=/home/{{ username }}/opt/graphite/conf/storage-schemas.conf mode=0644
+
+- name: copy storage-aggregation.conf
+  template: src=storage-aggregation.conf dest=/home/{{ username }}/opt/graphite/conf/storage-aggregation.conf mode=0644
