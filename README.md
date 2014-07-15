@@ -4,28 +4,27 @@ DO NOT USE THIS! PLAYBOOK NOT EXECUTABLE! WORK IN PROGRESS!
 
 ## Overview
 
-This is an Ansible playbook that sets up a new Webfaction server. You can, of
-course, just use the 1-click installer which is provided by Webfaction, but if
-you want to run your project professionally, you will outgrow that installer in
-no time.
+This is an Ansible playbook that sets up a new Webfaction server for a Django
+project. You can, of course, just use the 1-click installer which is provided
+by Webfaction, but if you want to run your project professionally, you will
+outgrow that installer in no time.
 
-This playbook sets up Django and serves it via nginx & uWSGI. This needs less
-memory than the Apache processes that Webfaction's 1-click installer would
-spawn and at the same time it's faster and allows more concurrent requests per
-second.
+Django will be served via nginx & uWSGI. This needs less memory than the Apache
+processes that Webfaction's 1-click installer would spawn and at the same time
+it's faster and allows more concurrent requests per second.
 
 Static files will be handled by Webfaction's global nginx instance, as usual,
 mainly because I got used to it and it doesn't add memory usage to your
 account. The only downside here is that you cannot enable gzip compression for
 your static files. Webfaction disabled this on purpose because of security
-converns. We could use our own nginx instance for this as well, and maybe we
+concerns. We could use our own nginx instance for this as well, and maybe we
 will in the future.
 
 Additionally we will install statsd, carbon, whisper and graphite-api, which
 will enable you to create awesome dashboards to monitor any aspect of your app
-/ server. In a different repository we will create a reusable Django app that
-works as a proxy before your graphite-api installation. This would enable you
-to add authentication and authorization in front of your graphite graphs to
+and your server. In a different repository we will create a reusable Django app
+that works as a proxy before your graphite-api installation. This would enable
+you to add authentication and authorization in front of your graphite graphs to
 ensure that one user cannot see the graphs of another user (out of the box,
 graphite does not assume a multi-user setup).
 
@@ -64,7 +63,7 @@ applications:
 * `media` - Static only (no .htaccess) / "expires max"
 * Delete the default `htdocs` app
 
-You might also want to create a Postgres database and an email account.
+You should also create a Postgres database and an email account.
 
 ## Change variables
 
