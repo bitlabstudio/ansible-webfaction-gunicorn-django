@@ -22,11 +22,15 @@ will in the future.
 
 Additionally we will install statsd, carbon, whisper and graphite-api, which
 will enable you to create awesome dashboards to monitor any aspect of your app
-and your server. In a different repository we will create a reusable Django app
-that works as a proxy before your graphite-api installation. This would enable
-you to add authentication and authorization in front of your graphite graphs to
-ensure that one user cannot see the graphs of another user (out of the box,
-graphite does not assume a multi-user setup).
+and your server.
+
+In a different repository we will create a reusable Django app that works as a
+proxy before your graphite-api installation. This would enable you to add
+authentication and authorization in front of your graphite graphs to ensure
+that one user cannot see the graphs of another user (out of the box, graphite
+does not assume a multi-user setup). However, right now I'm not too sure if
+this app would be too project-specific. If we can find a way to create a genric
+one, it shall be a reusable Django app.
 
 Supervisor will be used to keep all components up and running. A
 cronjob will restart Supervisor every 5 mintues, in case Webfaction killed the
