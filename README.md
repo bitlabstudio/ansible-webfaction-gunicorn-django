@@ -67,7 +67,9 @@ applications:
 * `media` - Static only (no .htaccess) / "expires max"
 * Delete the default `htdocs` app
 
-You should also create a Postgres database and an email account.
+You should also create a Postgres database and an email account. Usually
+graphite-web also needs a Postgres database, but since we are using,
+graphite-api, which is stateless, we don't need that second instance.
 
 ## Change variables
 
