@@ -8,11 +8,11 @@
   roles:
     - virtualenv
     - common-python
+    - django
     - nginx
     - uwsgi
     - nodejs
     - statsd
-    # TODO: first simple deployment here: - django
     - graphite-venv
     - carbon
     # TODO: install graphite-api: http://graphite-api.readthedocs.org/en/latest/installation.html

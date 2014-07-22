@@ -1,0 +1,25 @@
+---
+- name: create project venv
+  shell: source ~/.bash_profile && mkvirtualenv {{ venv_name }}
+  args:
+    executable: /bin/bash
+
+- name: install project venv
+  shell: source ~/.bash_profile && workon {{ venv_name }} && pip install -r {{ requirements_txt }}
+  args:
+    executable: /bin/bash
+
+- name: rsync cloned repo into destination
+  shell: rsync -avz --stats --delete {{ git_project_root }}/ {{ nginx_project_root }}
+
+- name: initiate database
+  shell: source ~/.bash_profile && workon {{ venv_name }} && ./manage.py syncdb --all --noinput
+  args:
+    chdir: "{{ nginx_project_root }}"
+    executable: /bin/bash
+
+- name: migrate database
+  shell: source ~/.bash_profile && workon {{ venv_name }} && ./manage.py migrate --fake
+  args:
+    chdir: "{{ nginx_project_root }}"
+    executable: /bin/bash

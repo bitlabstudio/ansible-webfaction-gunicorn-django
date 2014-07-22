@@ -7,7 +7,11 @@ graphite_port: XXXXX
 django_project_name: PROJECT_NAME
 
 # The things here should not be changed when using a default server layout
-git_repo: ~/src/{{ django_project_name }}
+venv_name: "{{ django_project_name }}"
+git_repo: /home/{{ username }}/src/{{ django_project_name }}
+git_project_root: "{{ git_repo }}/{{ django_project_name }}"
+requirements_txt: "{{ git_project_root }}/requirements.txt"
+nginx_project_root: /home/{{ username }}/webapps/nginx/{{ django_project_name }}
 requirements_txt: ~/src/{{ django_project_name }}/{{ django_project_name }}/requirements.txt
 nginx_version: 1.7.2
 nginx_downloads_url: http://nginx.org/download/
