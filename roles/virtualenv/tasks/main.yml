@@ -12,15 +12,15 @@
   raw: ~/bin/pip2.7 install --install-option="--user" virtualenvwrapper --no-use-wheel
 
 - name: add virtualenvwrapper exports to .bash_profile
-  lineinfile: "dest=~/.bash_profile line='{{ item.line }}'"
+  lineinfile: 'dest=~/.bash_profile line="{{ item }}"'
   with_items:
-    - { line: 'export PATH=$PATH:$HOME/bin' }
-    - { line: 'export TMPDIR=$HOME/tmp' }
-    - { line: 'export WORKON_HOME=$HOME/Envs' }
-    - { line: 'export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2.7' }
-    - { line: 'export PIP_VIRTUALENV_BASE=$WORKON_HOME' }
-    - { line: 'export PIP_RESPECT_VIRTUALENV=true' }
-    - { line: 'source $HOME/bin/virtualenvwrapper.sh' }
+    - export PATH=$PATH:$HOME/bin
+    - export TMPDIR=$HOME/tmp
+    - export WORKON_HOME=$HOME/Envs
+    - export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2.7
+    - export PIP_VIRTUALENV_BASE=$WORKON_HOME
+    - export PIP_RESPECT_VIRTUALENV=true
+    - source $HOME/bin/virtualenvwrapper.sh
 
 - name: source the new .bash_profile
   raw: source .bashrc
