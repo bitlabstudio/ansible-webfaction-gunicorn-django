@@ -1,5 +1,7 @@
 ---
 # Change these things to your liking
+# =============================================================================
+
 username: USERNAME
 nginx_port: XXXXX
 statsd_port: XXXXX
@@ -7,12 +9,24 @@ graphite_port: XXXXX
 django_project_name: PROJECT_NAME
 
 # The things here should not be changed when using a default server layout
+# =============================================================================
+
+# Name of your virtualenv
 venv_name: "{{ django_project_name }}"
+
+# Path to your Django project's git repository
 git_repo: /home/{{ username }}/src/{{ django_project_name }}
+
+# Path to the folder where `manage.py` resides in the git repository
 git_project_root: "{{ git_repo }}/{{ django_project_name }}"
-requirements_txt: "{{ git_project_root }}/requirements.txt"
+
+# Path to the deployed Django project on your server
 nginx_project_root: /home/{{ username }}/webapps/nginx/{{ django_project_name }}
+
+# Path to `requirements.txt` within the git repository
 requirements_txt: ~/src/{{ django_project_name }}/{{ django_project_name }}/requirements.txt
+
+# nginx related settings
 nginx_version: 1.7.2
 nginx_downloads_url: http://nginx.org/download/
 nginx_download_filename: nginx-{{ nginx_version }}.tar.gz

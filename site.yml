@@ -16,7 +16,7 @@
     - graphite-venv
     - carbon
     # TODO: install graphite-api: http://graphite-api.readthedocs.org/en/latest/installation.html
-    #TODO: update supervisor for all parts of the stack
+    # TODO: update supervisor for all parts of the stack
     # TODO: create django auth proxy before graphite-api
 
 # Inspiration taken from:
