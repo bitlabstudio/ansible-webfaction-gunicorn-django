@@ -1,3 +1,8 @@
+Important
+=========
+
+This app has been discontinued and is no longer maintained.
+
 # Ansible Playbook for Django on Webfaction
 
 DO NOT USE THIS! PLAYBOOK NOT EXECUTABLE! WORK IN PROGRESS!
